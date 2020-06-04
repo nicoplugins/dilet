@@ -1,0 +1,13 @@
+opcode  pingPong, aa, akaii
+
+    aDelL   init        0
+    aDelR   init        0
+    
+    aIn, kFdbk, aVar, iMax, iWindow      xin
+    
+    aDelL 	vdelayxw	aIn + aDelR*kFdbk*0.5, aVar, iMax, iWindow
+	aDelR 	vdelayxw	aDelL*kFdbk*1.5, aVar, iMax, iWindow
+	
+	        xout        aDelL*2, aDelR*2
+
+endop

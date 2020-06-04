@@ -1,0 +1,53 @@
+opcode  filters, aa, aakkk
+
+    aInL, aInR, kFiltLink, kHPCf, kLPCf  xin    
+    
+    kChange     changed kFiltLink
+    kComp[]     init    2
+    kComp[1]    =       kComp[0]
+    kComp[0]    =       kFiltLink
+      
+    kHPAbs          =       abs(kHPCf)
+    kLPAbs          =       abs(kLPCf)
+    kHPLinkPlus     =       kHPAbs+(sqrt(kHPAbs)*$ACCEL)
+    kHPLinkMinus    =       kHPAbs-(sqrt(kHPAbs)*$ACCEL)
+    kLPLinkPlus     =       kLPAbs+(sqrt(kLPAbs)*$ACCEL)
+    kLPLinkMinus    =       kLPAbs-(sqrt(kLPAbs)*$ACCEL)
+    kHPLimitPlus    limit   kHPLinkPlus, $LOWTHRESH, $HITHRESH
+    kLPLimitPlus    limit   kLPLinkPlus, $LOWTHRESH, $HITHRESH
+    kHPLimitMinus   limit   kHPLinkMinus, $LOWTHRESH, $HITHRESH
+    kLPLimitMinus   limit   kLPLinkMinus, $LOWTHRESH, $HITHRESH
+    
+    if  kChange==1    then
+        if      (kLPCf=$HITHRESH && kComp[0]>kComp[1])  ||  \
+                (kHPCf=$LOWTHRESH && kComp[0]<kComp[1]) ||  \
+                (kHPCf=$HITHRESH && kComp[0]>kComp[1])  ||  \
+                (kLPCf=$LOWTHRESH && kComp[0]<kComp[1]) then
+        
+        elseif  (kLPCf=$HITHRESH && kComp[0]<kComp[1])  ||  \
+                (kHPCf=$HITHRESH && kComp[0]<kComp[1])  ||  \
+                (kComp[0]<kComp[1])                     then
+        
+            chnset  kHPLimitMinus, "HPF"
+            chnset  kLPLimitMinus, "LPF"
+        
+        elseif  (kHPCf=$LOWTHRESH && kComp[0]>kComp[1]) ||  \
+                (kLPCf=$LOWTHRESH && kComp[0]>kComp[1]) ||  \
+                (kComp[0]>kComp[1])                     then
+        
+            chnset  kHPLimitPlus, "HPF"
+            chnset  kLPLimitPlus, "LPF"
+            
+        endif           
+    endif
+	
+	iPoles  =       3
+
+	;Filtro de estado variable. 	
+	aHPFL 	atonex 	aInL,  kHPCf, iPoles
+	aHPFR 	atonex 	aInR,  kHPCf, iPoles
+	aLPFL 	tonex 	aHPFL,  kLPCf, iPoles
+	aLPFR 	tonex 	aHPFR,  kLPCf, iPoles
+	        xout    aLPFL, aLPFR
+
+endop

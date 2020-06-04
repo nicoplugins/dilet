@@ -1,0 +1,137 @@
+0.0.0
+	• Establecí parámetros básicos.
+		- Tiempo
+		- Retroalimentación
+		- LPF
+		- LFO
+		- Dry/Wet
+	• Establecí esquema de modulación: el tiempo solamente modula en positivo.
+	• Versión monoaural.
+
+0.0.1
+	• Añadí comentarios.
+	• Cambié el esquema de modulación: el tiempo modula al doble o a la mitad de sí mismo.
+	• Añadí filtro de estado variable
+		- Paso bajo
+		- Paso alto
+		- Paso de banda
+		- Rechazo de banda
+
+0.0.2
+	• Añadí variable para selección de tipo de filtro.
+
+0.0.3
+	• Añadí esquema de selección de tipo de filtro con condicionales.
+
+0.0.4
+	• Comencé a añadir variables para reconocimiento de tempo de anfitirión.
+
+0.0.5
+	• Añadí variables para sincronización de BPM.
+	• Añadí variables para botones
+		- Tiempo sincronizado a tempo o libre
+		- Subdivisiones rítmicas
+		- Tresillo
+		- Nota con punto
+
+0.0.6
+	• Agregué comentarios explicando botones para selección de tiempos de sync.
+	• Di formato más comprensible a la organización de las variables de tiempos de sync.
+	• Reorganicé el código para que fuera más fácil de leer.
+
+0.0.7
+	• Introduje variables separadas para el lado izquierdo y derecho.
+	• Añadí esquema de ping-pong.
+	• Añadí esquema de jitter.
+		— Modulación errática del tiempo.
+		— Emula variación azarosa de esquemas analógicos de delay.
+
+0.0.8
+	• Trabajo de optimización de variables
+		- Hay demasiado corriendo en k-rate
+		- Comencé primer traslado a Cabbage
+		- Convertí el sistema de sincronización de tempo a un opcode.
+
+0.0.9
+	• Introduje perillas
+		— Analog effect
+		— Dry/Wet
+		- Filter
+		- LFO
+		- Feedback
+	• Establecí el flujo de señal del delay
+
+0.1.0
+	• Establecí tres diferentes tiempos de delay
+		— Libre
+		— Sincronía con el BPM de un DAW
+		— Tempo manual
+	• Logré que dejara de hacer ruido la perilla de tiempo
+		— El plugin detecta clicks del mouse
+		— Desactiva la perilla de tiempo cada vez que el usuario da un click
+
+0.1.1
+	• Introduje cajas de texto para parámetros
+	• Cambié orden de efectos para que no incluyeran el "dry"
+
+0.1.2
+	• Introducción de perilla "link" para filtros (me costó un buen).
+	• Rediseño de la interfaz gráfica para reflejar H-Delay, de Waves.
+
+0.1.3
+	• Optimización del código de filtros para utilizar menos líneas.
+	• Eliminé botones para efectos. Los opcodes ahora se encienden cada que las perillas no están en su máximo o mínimo.
+		— Analógico
+		— Filtros
+
+0.1.4
+	• Descargué un beta de Cabbage para poder cambiar el tamaño del texto del nslider que muestra el tiempo del delay.
+	• Implementé efecto de LoFi.
+	• Puse botón de tap tempo, pero todavía no tiene funcionalidad.
+	• Añadí efecto de cinta para cambios de pitch cuando se gira la perilla de tiempo.
+	• Sincronicé la perilla de tiempo y la visualización de milisegundos en el centro del plugin.
+	• Añadí nombre: "Dilet"
+	• Le di funcionalidad a la perilla "Output".
+	• Añadí botón para controlar delay por samples y empecé experimentación con este esquema.
+	• Añadí animación para modulación del LFO.
+
+0.1.5
+	• Optimicé y organicé el código.
+	• Incluí un esquema para delay por samples.
+	• Hice que el delay modulado por sierra incluyera dos líneas de delay alternantes para prevenir clicks y pops.
+
+0.1.6
+	• Incluí una visualización para demostrar las dos líneas de delay cuando se enciende la modulación por ondas de sierra.
+	• Añadí los botones de polaridad para el lado izquierdo y derecho del delay.
+
+0.1.7
+	• Trasladé los opcodes a archivos de texto por separado.
+
+0.1.8
+	• Comencé pruebas con inclusión de imágenes para interfaz gráfica.
+	• Hice estéreo el efecto.
+	• Hice un esquema de presets. :D
+
+1.0.0 (comienza beta testing)
+	• Corrección de bugs
+		— Ya no hay un crash cuando se selecciona la opción para el tempo del anfitrión
+			· El chnget para el canal que adquiere esa información estaba fuera del instrumento	
+				- Esto provocaba que no corriera en krate la obtención de la información
+				- El resultado era que el tempo se reportaba como "0"
+				- Cuando el plugin intentaba hacer matemática con la cifra de 0, el plugin crasheaba
+		— La perilla "Link" ya volvió a funcionar como antes.
+			· La versión beta de Cabbage no permitía que incrementara la perilla más allá de 3.
+			· Abrí el release oficial (2.3.0), corrí un encoder y funcionó.
+			· Regresé a la versión beta y volvió a funcionar correctamente el encoder.
+		— El subrayado para el LFO ya no debería aparecer en un valor arbitrario
+			· Hice que el outline comience en el valor mínimo al instaurar el plugin
+	• Mejoras
+		— El esquema de taps ahora promedia con cuatro taps, no ocho.
+		— Mejoré la calidad de la distorsión en la perilla Analog I
+			· Cambié al opcode "exciter", en vez de "distort".  Tiene más control sobre armónicos.
+			· Introduje un ecualizador que da 3dB más en 250 Hz para hacerlo sonar más cálido.
+			· Retiré el esquema de analogJitter
+				- Estaba dando demasiados problemas de artefactos digitales.  
+				- Debe haber sido la conversión a krate en el opcode jspline.
+		
+

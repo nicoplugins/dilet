@@ -1,0 +1,17 @@
+opcode  samplePing, aa, akaii
+
+    aIn, kFdbk, aVar, iMax, iWindow  xin
+    
+    aDelL   init    0
+    aDelR   init    0
+
+    aDel    =   1/sr
+    aTime   =   aVar*1000
+ 
+    aDelL    vdelayxw	aIn + aDelR*kFdbk*0.5, aDel*aTime, iMax, iWindow
+    aDelR    vdelayxw	aDelL*kFdbk*1.5, aDel*aTime, iMax, iWindow
+      
+                    xout    aDelL*2, aDelR*2
+
+
+endop

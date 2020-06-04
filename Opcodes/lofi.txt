@@ -1,0 +1,14 @@
+opcode  lofi,    aa, aa
+
+    aInL, aInR  xin
+    
+    kCf     =   5000
+    iPoles  =   6
+    
+    aOutL    tonex  aInL, kCf, iPoles
+    aOutR    tonex  aInR, kCf, iPoles
+    
+    
+            xout    aOutL, aOutR
+   
+endop

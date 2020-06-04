@@ -1,0 +1,29 @@
+opcode      subdivision, a, kk 
+
+            kFree, kBPM       xin
+            
+            iDump       init    0
+            
+            kWhole      chnget  "whole"
+            kHalf       chnget  "half"
+            kQuarter    chnget  "quarter"
+            k8th        chnget  "eighth"
+            k16th       chnget  "sixteenth"
+            
+            kDot        chnget  "dot"
+            kTriplet    chnget  "triplet"
+            
+            kSubDiv =   (kWhole*1)+(kHalf*2)+(kQuarter*3)+(k8th*4)+(k16th*5)+(kTriplet*5)+(kDot*10)
+            
+            if  kSubDiv==0  then
+                    aTime   =   kFree
+            else          
+                    kSync   BPMCalc kBPM, kSubDiv
+                    aTime   =       kSync
+            endif
+            
+            chnset  k(aTime)*1000, "timeDisp" 
+            
+                    xout    aTime
+
+endop

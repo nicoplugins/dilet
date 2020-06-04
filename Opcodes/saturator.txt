@@ -1,0 +1,51 @@
+opcode  saturator, aa, aak
+
+	setksmps	1
+
+    aInL, aInR, kKnob        xin
+    
+    kLow 	=		20
+    kHigh 	=		20000
+    kBlend 	=		10
+
+   	kSat 	= 		kKnob*4
+	iPoles  =       3
+	
+	kThresh =       0
+	kLoKnee =       48
+	kHiKnee =       60
+	kRatio  =       kKnob*4+1
+	kAtt    =       0.015
+	kRel    =       160
+	iLook   =       0.05
+	kMakeUp =       kKnob*ampdbfs(15)+1	
+
+	kCf 	=		250
+	kBw 	=		250
+	kGain 	=		1.5
+	
+	kHPCf   =       kKnob*300
+	kLPCf   =       20000-(kKnob*4000)
+
+	kNoiseAmp	=	0.00025
+	kNoiseType	=	2 ;Brown noise (0 is white and 1 is pink)
+
+	aShapeL 	exciter	    aInL, kLow, kHigh, kSat, kBlend
+	aShapeR 	exciter	    aInR, kLow, kHigh, kSat, kBlend
+	aCompL      compress    aShapeL, aShapeL, kThresh, kLoKnee, kHiKnee, kRatio, kAtt, kRel, iLook
+	aCompR      compress    aShapeR, aShapeR, kThresh, kLoKnee, kHiKnee, kRatio, kAtt, kRel, iLook
+	aEQL		eqfil 		aCompL*kMakeUp, kCf, kBw, kGain
+	aEQR 		eqfil 		aCompR*kMakeUp, kCf, kBw, kGain
+	aHPFL       atonex      aEQL, kHPCf, iPoles
+	aHPFR       atonex      aEQR, kHPCf, iPoles
+	aLPFL       tonex       aHPFL, kLPCf, iPoles
+	aLPFR       tonex       aHPFR, kLPCf, iPoles
+
+	aNoise 		fractalnoise 	kNoiseAmp, kNoiseType	
+
+	aMixL 		sum 		aLPFL, aNoise*kKnob
+	aMixR 		sum 		aLPFR, aNoise*kKnob
+
+     		    xout 	    aMixL*2, aMixR*2
+
+endop

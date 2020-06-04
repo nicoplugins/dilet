@@ -1,0 +1,31 @@
+opcode  taps,    k, kk
+
+    kTwoTaps, kBPM    xin
+    
+    kTempoChange    changed kTwoTaps
+            
+            kTaps[]         init    4
+             
+            if  kTempoChange==1 then
+                kTaps[3]    =   kTaps[2]
+                kTaps[2]    =   kTaps[1]
+                kTaps[1]    =   kTaps[0]
+            endif
+            
+                kTaps[0]    =   kTwoTaps
+            
+            if      kTaps[0]=0  then
+                kTapTempo   =   kBPM
+            elseif  kTaps[1]=0  then
+                kTapTempo   =   kTaps[0]
+            elseif  kTaps[2]=0  then
+                kTapTempo   =   (kTaps[0]+kTaps[1])/2
+            elseif  kTaps[3]=0  then
+                kTapTempo   =   (kTaps[0]+kTaps[1]+kTaps[2])/3
+            elseif  kTaps[3]!=0  then
+                kTapTempo   =   (kTaps[0]+kTaps[1]+kTaps[2]+kTaps[3])/4
+            endif
+
+                        xout    kTapTempo
+
+endop

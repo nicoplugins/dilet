@@ -1,0 +1,36 @@
+opcode 	pitchShift, aa, aakaii
+	
+	setksmps	1
+																				
+	aInL, aInR, kFdbk, aVar, iMax, iWin	xin
+	
+	kRate       chnget  "rate"
+	
+	iWindow     ftgen   1, 0, 16384, 20, 3
+	iTriangle   ftgen   2, 0, 257, 7, 1, 128, -1, 128, 1
+	
+	aMixL       init    0
+	aMixR       init    0
+
+	kDelRate 	=		(kRate-1)/aVar
+
+	avDel1		phasor 	-kDelRate
+	avDel2		phasor	-kDelRate, 0.5
+	aFade1		tablei	avDel1, iWindow, 1, 0, 1
+	aFade2		tablei	avDel2, iWindow, 1, 0, 1
+				
+    aDel1L, aDel1R    vdelayxws  aInL+aMixL*(kFdbk*0.5), aInR+aMixR*(kFdbk*0.5), avDel1*aVar, iMax, iWin
+    chnset  k(avDel1*aVar), "delay1"
+    aDel2L, aDel2R    vdelayxws  aInR+aMixR*(kFdbk*0.5), aInR+aMixR*(kFdbk*0.5), avDel2*aVar, iMax, iWin
+    chnset  k(avDel2*aVar), "delay2"
+    aMixL       =       aDel1L*aFade1+aDel2L*aFade2
+    aMixR       =       aDel1R*aFade1+aDel2R*aFade2
+    
+    
+    kFadeLFO    oscil   1, kDelRate, iTriangle
+    
+    chnset  kFadeLFO, "ABfader"
+    																			
+				xout	aMixL, aMixR
+							
+endop

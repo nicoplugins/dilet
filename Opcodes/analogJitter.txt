@@ -1,0 +1,16 @@
+opcode  analogJitter, a, ak
+
+   aTime, kKnob	xin 	
+
+	kHzMin 	= 	2 	;Tasa de variación mínima en Hertz.
+	kHzMax 	=	16 	;Tasa de variación máxima en Hertz.
+	kJitAmp	=	aTime*(kKnob*0.0035)
+
+	kJit 	jspline kJitAmp, kHzMin, kHzMax ;Opcode jspline (Jitter Spline).
+	aJit 	= 		kJit
+	;Inclusión de Jitter para variable de tiempo
+	aOut    = 		aTime + aJit
+	
+	        xout    aOut
+
+endop

@@ -1,0 +1,14 @@
+Versión 0.1.8
+	
+	Bugs:
+	• El botón de sincronización al BPM del anfitrión sigue crasheando el DAW, congelándolo, o cerrándolo abruptamente.
+	• La perilla "Link" no funciona si no está en play el DAW.
+	• La perilla "Link" funciona mal si el DAW está en play.
+	• El display de modulación se queda atorado en un valor inicial cuando abres el DAW.
+		— Esto, probablemente, está relacionado con el hecho de que dilet sólo da updates cuando das "play".
+	
+	Mejoras:
+	• ¿Tal vez es demasiado promediar con ocho taps?
+	• Mejorar la calidad de la distorsión en Analog I.
+	• ¿Hay manera de detectar si está en un auxiliar o en un track principal?
+	• Incluir figura azarosa en oscilador de frecuencia baja.

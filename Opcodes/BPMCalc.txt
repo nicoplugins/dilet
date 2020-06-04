@@ -1,0 +1,57 @@
+opcode  BPMCalc, k, kk
+
+    kBPM, kSubDiv       xin
+
+	kQuarter 	= 		$SYNCFACTOR/kBPM 	;Cálculo de relación entre BPM y subdivisión de 1/4.
+	
+	;Subdivisiones rítmicas básicas.
+	if  kSubDiv==1    then 
+	    kSync   =   kQuarter*4 	;Calcula un redonda.
+	elseif  kSubDiv==2    then
+	    kSync   = 	kQuarter*2 	;Calcula una blanca.
+	elseif  kSubDiv==3    then
+	    kSync   =   kQuarter    ;Equivale a una negra.
+	elseif  kSubDiv==4    then
+	    kSync 	=	kQuarter*0.5 	;Calcula una corchea.
+	elseif  kSubDiv==5    then
+	    kSync	= 	kQuarter*0.25 	;Calcula una semicorchea.
+	
+	elseif  kSubDiv==6    then
+	    kSync   =   kQuarter*$TRIPLET*4 ;Calcula tresillo de compás.
+	elseif  kSubDiv==7    then
+	    kSync   =   kQuarter*$TRIPLET*2 ;Calcula tresillo de blanca.
+	elseif  kSubDiv==8    then
+	    kSync   =   kQuarter*$TRIPLET   ;Calcula tresillo de negra.
+	elseif  kSubDiv==9    then
+	    kSync   =   kQuarter*$TRIPLET*0.5   ;Calcula tresillo de corchea.
+	elseif  kSubDiv==10   then
+	    kSync   =   kQuarter*$TRIPLET*0.25  ;Calcula tresillo de semicorchea.
+	
+	elseif  kSubDiv==11   then
+	    kSync   =   kQuarter*$DOT*4 ;Calcula compás con puntillo.
+	elseif  kSubDiv==12   then
+	    kSync   =   kQuarter*$DOT*2 ;Calcula blanca con puntillo.
+	elseif  kSubDiv==13   then
+	    kSync   =   kQuarter*$DOT   ;Calcula negra con puntillo.
+	elseif  kSubDiv==14   then
+	    kSync   =   kQuarter*$DOT*0.5   ;Calcula corchea con puntillo.
+	elseif  kSubDiv==15   then
+	    kSync   =   kQuarter*$DOT*0.25  ;Calcula semicorchea con puntillo.
+	
+	elseif  kSubDiv==16   then
+	    kSync   =   kQuarter*$DOT*$TRIPLET*4 ;Calcula compás con puntillo.
+	elseif  kSubDiv==17   then
+	    kSync   =   kQuarter*$DOT*$TRIPLET*2 ;Calcula blanca con puntillo.
+	elseif  kSubDiv==18   then
+	    kSync   =   kQuarter*$DOT*$TRIPLET   ;Calcula negra con puntillo.
+	elseif  kSubDiv==19   then
+	    kSync   =   kQuarter*$DOT*$TRIPLET*0.5   ;Calcula corchea con puntillo.
+	elseif  kSubDiv==20   then
+	    kSync   =   kQuarter*$DOT*$TRIPLET*0.25  ;Calcula semicorchea con puntillo.
+	
+	endif
+	
+    xout   kSync
+	
+endop
+	

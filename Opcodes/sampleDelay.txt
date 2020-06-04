@@ -1,0 +1,15 @@
+opcode  sampleDelay, aa, aaaii
+
+    
+
+    aInL, aInR, aVar, iMax, iWindow  xin
+
+    aDel    =   1/sr
+    aTime   =   aVar*1000
+ 
+    aDelL, aDelR    vdelayxws	aInL, aInR, aDel*aTime, iMax, iWindow
+      
+                    xout    aDelL, aDelR
+
+
+endop

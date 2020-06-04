@@ -1,0 +1,11 @@
+opcode  tape,    a, a
+
+    setksmps    1
+    
+    aTime       xin
+    
+    kTimeOut    port    k(aTime), 0.06, -1
+    
+                xout    a(kTimeOut)
+
+endop

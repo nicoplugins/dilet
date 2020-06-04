@@ -1,0 +1,41 @@
+opcode  timeLFO, a, ak
+
+        aTime, kDepth       xin
+        
+        chnset  "active(1)", "outlineIdent"
+        chnset  "visible(1)", "outlineIdent"
+        ;Oscilador de frecuencia baja.
+        kRate	    chnget  "rate" 		;Frecuencia del oscilador en Hz.
+        kSine       chnget  "sine"
+        kTri        chnget  "triangle"
+        kSawUp      chnget  "sawUp"
+        kRandom     chnget  "random"
+	
+        kWave   =   (kSine*1)+(kTri*2)+(kSawUp*3)+(kRandom*4)	;Forma de onda del oscilador.
+        kMod 	= 	aTime*(kDepth) 		;Toma el tiempo y lo duplica (máximo) o divide (mínimo).
+	
+        if      kWave=1     then
+            aLFO    lfo	   kMod, kRate, 0 	;Oscilador de frecuencia baja en sinusoidal.
+        elseif  kWave=2     then
+            aLFO	lfo	   kMod, kRate, 1 	;Oscilador de frecuencia baja en triángulo.
+        elseif  kWave=3     then
+            aLFO	lfo    kMod, kRate, 4 	;Oscilador de frecuencia baja en sierra hacia arriba.
+        elseif  kWave=4     then
+            aLFO   randi   kMod, kRate, 2, 1
+        endif	    			
+	
+        aVar 	= 	aTime+aLFO 	;Conexión entre perilla de tiempo y oscilador.
+        
+                    xout    aVar
+                    
+        /*
+        Formas de onda del oscilador:
+        0 		=			Sinusoidal
+        1 		=			Triángulo
+        2 		= 			Cuadro bipolar
+        3 		= 			Cuadro unipolar
+        4 		= 			Sierra hacia arriba
+        5 		= 			Sierra hacia abajo
+	    */
+
+endop
